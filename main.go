@@ -1,10 +1,14 @@
-/*
-Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-*/
 package main
 
-import "debug-redactor/cmd"
+import (
+	"debug-redactor/cmd"
+	"fmt"
+	"os"
+)
 
 func main() {
-	cmd.Execute()
+	if err := cmd.Execute(); err != nil {
+		fmt.Println(err)
+		os.Exit(1) // Exits the program with a status code of 1 to indicate an error occurred.
+	}
 }
