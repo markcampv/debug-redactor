@@ -12,28 +12,25 @@ import (
 // redactCmd represents the redact command
 var redactCmd = &cobra.Command{
 	Use:   "redact",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Redacts sensitive information from debug bundles",
+	Long:  `A tool to automatically redact sensitive information like IP addresses from debug bundles.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("redact called")
+		source, _ := cmd.Flags().GetString("source")
+		if source == "" {
+			fmt.Println("Source file must be specified")
+			return
+		}
+		err := redactor.Redact(source)
+		if err != nil {
+			fmt.Println("Error redacting file:", err)
+			return
+		}
+		fmt.Println("File redacted successfully")
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(redactCmd)
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// redactCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// redactCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	redactCmd.Flags().StringP("source", "s", "", "Source log file to redact")
 }
