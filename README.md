@@ -2,7 +2,7 @@
 
 ## Overview
 
-Debug Redactor is a powerful, easy-to-use tool designed to enhance the security of your Consul debug logs. It automatically redacts sensitive information, such as IP addresses, ensuring that your debugging processes adhere to privacy standards and regulations. Whether you're sharing logs with support teams, storing them for analysis, or auditing system behavior, Debug Redactor helps keep your sensitive data safe.
+Debug Redactor is a easy-to-use tool designed to enhance the security of your Consul debug logs. It automatically redacts sensitive information, such as IP addresses, ensuring that your debugging processes adhere to privacy standards and regulations. Whether you're sharing logs with support teams, storing them for analysis, or auditing system behavior, Debug Redactor helps keep your sensitive data safe.
 
 ## Features
 
