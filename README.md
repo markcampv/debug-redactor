@@ -27,4 +27,12 @@ Clone the repository and build the tool:
 git clone https://github.com/yourusername/debug-redactor.git
 cd debug-redactor
 go build -o debug-redactor
+```
+### Usage
+
+After building Debug Redactor, you can use it directly from the command line to redact sensitive information from your Consul debug logs. The tool requires you to specify the path to the source tar.gz file containing the logs you wish to process.
+
+```sh
+./debug-redactor --source /path/to/your/consul-debug.tar.gz
+
 
