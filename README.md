@@ -16,14 +16,13 @@ Debug Redactor is a easy-to-use tool designed to enhance the security of your Co
 
 ### Prerequisites
 
-- 
 - Access to Consul debug bundle that you wish to redact.
 
 ### Installation
 
-You can download pre-built binaries of Debug Redactor directly from our GitHub [Releases](https://github.com/yourusername/debug-redactor/releases) page. This allows you to install the tool without needing to compile it from the source.
+You can download pre-built binaries of Debug Redactor directly from our GitHub [Releases](https://github.com/markcampv/debug-redactor/releases) page. This allows you to install the tool without needing to compile it from the source.
 
-1. **Go to the Releases Page**: Navigate to [Releases](https://github.com/yourusername/debug-redactor/releases) in the Debug Redactor repository.
+1. **Go to the Releases Page**: Navigate to [Releases](https://github.com/markcampv/debug-redactor/releases) in the Debug Redactor repository.
 
 2. **Download the Binary**: Download the appropriate binary for your operating system and architecture. We provide binaries for Windows, macOS, and Linux.
 
