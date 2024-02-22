@@ -26,36 +26,44 @@ You can download pre-built binaries of Debug Redactor directly from our GitHub [
 
 2. **Download the Binary**: Download the appropriate binary for your operating system and architecture. We provide binaries for Windows, macOS, and Linux.
 
-    - For Linux: `debug-redactor-linux-amd64`
-    - For macOS: `debug-redactor-darwin-amd64`
-    - For Windows: `debug-redactor-windows-amd64.exe`
+    - For Linux: `debug-redactor-linux-amd64.zip`
+    - For macOS: `debug-redactor-darwin-amd64.zip`
+    - For Windows: `debug-redactor-windows-amd64.zip`
 
 3. **Make the Binary Executable** (Linux and macOS):
 
    After downloading, you may need to make the binary executable. On Linux and macOS, you can do this with the following command:
 
    ```sh
-   chmod +x debug-redactor-linux-amd64  # Adjust the filename for macOS or Linux as necessary
+   chmod +x debug-redactor 
 
 
 
 ### Usage
 
-Once Debug Redactor is installed, you can run it directly from the command line to redact sensitive information from your Consul debug logs. Here’s how to use Debug Redactor:
-
-**On Linux and macOS:**
+Debug Redactor is designed to enhance the privacy of your Consul debug bundles by redacting sensitive information. Once installed, you can use it by specifying the source file with the `--source` flag. The command below illustrates how to run Debug Redactor:
 
 ```sh
-./debug-redactor-linux-amd64 --source /path/to/your/consul-debug.tar.gz
+./debug-redactor --source /path/to/your/consul-debug.tar.gz
+```
+### Example Output
+Here's an example of running Debug Redactor on a Consul debug bundle from a [hcdiag](https://github.com/hashicorp/hcdiag/) bundle:
+```shell
+./debug-redactor --source ~/hcdiag-2024-01-29T093000Z/ConsulDebug17709286985/ConsulDebug.tar.gz
+
+File processed successfully. Output file: ~/hcdiag-2024-01-29T093000Z/ConsulDebug17709286985/ConsulDebug.tar-redacted.gz
 ```
 
-```sh
-./debug-redactor-darwin-amd64 --source /path/to/your/consul-debug.tar.gz
-```
-**On Windows:**
+This indicates that the tool has successfully processed the input file and created a new, redacted version named ConsulDebug-redacted.tar.gz in the same directory as the source file. The redacted file omits sensitive information, making it safer for sharing or analysis.
 
-```sh
-.\debug-redactor-windows-amd64.exe --source C:\path\to\your\consul-debug.tar.gz
+### Redacted IPs in logs:
+
+The following examples demonstrate how IP addresses are redacted within the logs, ensuring enhanced privacy and security:
+
+```shell
+[DEBUG] agent.server.memberlist.lan: memberlist: Initiating push/pull sync with: node-1 [REDACTED]:8301
+[DEBUG] agent.server.memberlist.lan: memberlist: Initiating push/pull sync with: node-2 [REDACTED]:8301
+[DEBUG] agent.server.memberlist.lan: memberlist: Initiating push/pull sync with: node-3 [REDACTED]:8301
 ```
 
 ### Custom Redactions(Currently Under Development)
