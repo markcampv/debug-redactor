@@ -34,9 +34,9 @@ You can download pre-built binaries of Debug Redactor directly from our GitHub [
 
    After downloading, you may need to make the binary executable. On Linux and macOS, you can do this with the following command:
 
-   ```sh
+```sh
    chmod +x debug-redactor 
-
+```
 
 
 ### Usage
