@@ -34,5 +34,10 @@ After building Debug Redactor, you can use it directly from the command line to 
 
 ```sh
 ./debug-redactor --source /path/to/your/consul-debug.tar.gz
+```
+
+### Custom Redactions(Currently Under Development)
+Future versions of Debug Redactor will allow for custom redaction rules, enabling users to specify additional patterns for sensitive information that should be redacted from debug bundles.
+
 
 
