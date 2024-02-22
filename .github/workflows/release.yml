@@ -7,6 +7,7 @@ on:
     pull_request:
       branches:
         - main
+
 permissions:
   contents: write
 
@@ -23,23 +24,27 @@ jobs:
         with:
           go-version: '1.15'
 
+      - name: Extract tag name
+        id: tag_name
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
       # Build for Linux
       - name: Build Binary for Linux
         run: |
           GOOS=linux GOARCH=amd64 go build -o debug-redactor
-          zip debug-redactor_${GITHUB_REF_NAME#refs/tags/}_linux_amd64.zip debug-redactor
+          zip debug-redactor_${{ env.TAG_NAME }}_linux_amd64.zip debug-redactor
 
       # Build for macOS
       - name: Build Binary for macOS
         run: |
           GOOS=darwin GOARCH=amd64 go build -o debug-redactor
-          zip debug-redactor_${GITHUB_REF_NAME#refs/tags/}_darwin_amd64.zip debug-redactor
+          zip debug-redactor_${{ env.TAG_NAME }}_darwin_amd64.zip debug-redactor
 
       # Build for Windows
       - name: Build Binary for Windows
         run: |
           GOOS=windows GOARCH=amd64 go build -o debug-redactor.exe
-          zip debug-redactor_${GITHUB_REF_NAME#refs/tags/}_windows_amd64.zip debug-redactor.exe
+          zip debug-redactor_${{ env.TAG_NAME }}_windows_amd64.zip debug-redactor.exe
 
       # Create GitHub Release
       - name: Create Release
@@ -48,7 +53,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref_name }}
+          tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref_name }}
           draft: false
           prerelease: false
@@ -60,8 +65,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./debug-redactor_${GITHUB_REF_NAME#refs/tags/}_linux_amd64.zip
-          asset_name: debug-redactor_${GITHUB_REF_NAME#refs/tags/}_linux_amd64.zip
+          asset_path: ./debug-redactor_${{ env.TAG_NAME }}_linux_amd64.zip
+          asset_name: debug-redactor_${{ env.TAG_NAME }}_linux_amd64.zip
           asset_content_type: application/zip
 
       # Upload macOS ZIP
@@ -71,8 +76,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./debug-redactor_${GITHUB_REF_NAME#refs/tags/}_darwin_amd64.zip
-          asset_name: debug-redactor_${GITHUB_REF_NAME#refs/tags/}_darwin_amd64.zip
+          asset_path: ./debug-redactor_${{ env.TAG_NAME }}_darwin_amd64.zip
+          asset_name: debug-redactor_${{ env.TAG_NAME }}_darwin_amd64.zip
           asset_content_type: application/zip
 
       # Upload Windows ZIP
@@ -82,7 +87,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./debug-redactor_${GITHUB_REF_NAME#refs/tags/}_windows_amd64.zip
-          asset_name: debug-redactor_${GITHUB_REF_NAME#refs/tags/}_windows_amd64.zip
+          asset_path: ./debug-redactor_${{ env.TAG_NAME }}_windows_amd64.zip
+          asset_name: debug-redactor_${{ env.TAG_NAME }}_windows_amd64.zip
           asset_content_type: application/zip
 
