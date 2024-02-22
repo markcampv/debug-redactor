@@ -6,7 +6,7 @@ Debug Redactor is a easy-to-use tool designed to enhance the security of your Co
 
 ## Features
 
-- **Automated Redaction**: Automatically detects and redacts IP addresses and tokens from Consul debug logs.
+- **Automated Redaction**: Automatically detects and redacts IP addresses from a Consul debug bundle.
 - **Custom Redaction Rules**: Easily extendable to include custom redaction patterns based on your specific needs.
 - **User-Friendly**: Simple command-line interface for straightforward operation.
 - **Efficient Processing**: Designed to handle large log files with minimal performance impact.
