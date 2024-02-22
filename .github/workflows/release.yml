@@ -1,0 +1,67 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    name: Build Binaries and Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.15'
+      - name: Build Binary for Linux
+        run: GOOS=linux GOARCH=amd64 go build -o debug-redactor-linux-amd64
+
+      - name: Build Binary for Windows
+        run: GOOS=windows GOARCH=amd64 go build -o debug-redactor-windows-amd64.exe
+
+      - name: Build Binary for macOS
+        run: GOOS=darwin GOARCH=amd64 go build -o debug-redactor-darwin-amd64
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Linux Binary to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./debug-redactor-linux-amd64
+          asset_name: debug-redactor-linux-amd64
+          asset_content_type: application/octet-stream
+
+      - name: Upload Windows Binary to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./debug-redactor-windows-amd64.exe
+          asset_name: debug-redactor-windows-amd64.exe
+          asset_content_type: application/octet-stream
+
+      - name: Upload macOS Binary to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./debug-redactor-darwin-amd64
+          asset_name: debug-redactor-darwin-amd64
+          asset_content_type: application/octet-stream
